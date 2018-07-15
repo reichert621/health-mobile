@@ -1,37 +1,60 @@
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import moment from 'moment';
 import { ActivityCard } from '../presentation';
-import { fetchTasks } from '../../api/tasks';
+import { findOrCreateByDate, toggleScorecardTask } from '../../api/scorecards';
 
 class Scorecard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      refreshing: false,
+      scorecard: null,
       tasks: []
     };
   }
 
   componentDidMount() {
+    return this.fetchCurrentScorecard().catch(err => console.log(err));
+  }
+
+  fetchCurrentScorecard() {
     const date = moment();
     const today = date.format('YYYY-MM-DD');
 
-    // TODO: fetch today's scorecard instead of all tasks
-    return fetchTasks()
-      .then(tasks => {
-        return this.setState({ tasks });
+    return findOrCreateByDate(today).then(scorecard => {
+      const { tasks = [] } = scorecard;
+
+      return this.setState({ scorecard, tasks, refreshing: false });
+    });
+  }
+
+  handleRefresh() {
+    this.setState({ refreshing: true });
+
+    return this.fetchCurrentScorecard()
+      .then(() => {
+        return this.setState({ refreshing: false });
       })
       .catch(err => console.log(err));
   }
 
   handleToggleTask(task) {
-    const { tasks } = this.state;
-    const updated = tasks.map(t => {
-      return t.id === task.id ? { ...t, isComplete: !t.isComplete } : t;
-    });
+    const { scorecard, tasks = [] } = this.state;
+    const { id: scorecardId } = scorecard;
+    const { id: taskId, isComplete: wasComplete } = task;
+    const isComplete = !wasComplete;
 
-    return this.setState({ tasks: updated });
+    return toggleScorecardTask(scorecardId, taskId, isComplete)
+      .then(res => {
+        const updated = tasks.map(t => {
+          return t.id === taskId ? { ...t, isComplete: !t.isComplete } : t;
+        });
+
+        return this.setState({ tasks: updated });
+      })
+      .catch(err => console.log('Error toggling task!', err));
   }
 
   renderActivityCard(task) {
@@ -47,13 +70,19 @@ class Scorecard extends Component {
   }
 
   render() {
-    const { tasks = [] } = this.state;
+    const { tasks = [], refreshing } = this.state;
 
     return (
       <FlatList
         data={tasks}
         keyExtractor={(item, index) => index}
         renderItem={({ item: task }) => this.renderActivityCard(task)}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => this.handleRefresh()}
+          />
+        }
       />
     );
   }

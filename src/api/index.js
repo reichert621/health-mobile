@@ -1,5 +1,6 @@
 import * as http from './http';
-import * as tasks from './tasks';
 import * as auth from './auth';
+import * as tasks from './tasks';
+import * as scorecards from './scorecards';
 
-export { http, tasks, auth };
+export { http, auth, tasks, scorecards };
