@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
-import { signup } from '../../api/auth';
+import { signup } from '../api/auth';
 
-class Register extends Component {
+// TODO: move more logic to separate component
+class RegisterScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -40,6 +41,7 @@ class Register extends Component {
   }
 
   render() {
+    // TODO: improve UI
     return (
       <View style={styles.register}>
         <Text style={{ fontSize: 24, marginBottom: 10 }}>Register</Text>
@@ -87,4 +89,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Register;
+export default RegisterScreen;

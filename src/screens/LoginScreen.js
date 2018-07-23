@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
-import { login } from '../../api/auth';
+import { login } from '../api/auth';
 
-class Login extends Component {
+// TODO: move more logic to separate component
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -39,6 +40,7 @@ class Login extends Component {
   }
 
   render() {
+    // TODO: improve UI
     return (
       <View style={styles.login}>
         <Text style={{ fontSize: 24, marginBottom: 10 }}>Log in</Text>
@@ -83,4 +85,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+export default LoginScreen;

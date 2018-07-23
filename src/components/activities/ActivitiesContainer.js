@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import moment from 'moment';
-import { ActivityCard } from '../presentation';
+import ActivityCard from './ActivityCard';
 import { findOrCreateByDate, toggleScorecardTask } from '../../api/scorecards';
 
-class Scorecard extends Component {
+class ActivitiesContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -88,4 +88,4 @@ class Scorecard extends Component {
   }
 }
 
-export default Scorecard;
+export default ActivitiesContainer;

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { images } from '../../config';
 
-const TaskCard = ({ task, onToggle }) => {
+const ActivityCard = ({ task, onToggle }) => {
   const { description, points, category, isComplete } = task;
 
   return (
@@ -33,11 +33,6 @@ const TaskCard = ({ task, onToggle }) => {
             {points} {points === 1 ? 'point' : 'points'}
           </Text>
         </View>
-
-        {/*
-        <View style={styles.activityPointsButton}>
-        </View>
-        */}
       </View>
     </View>
   );
@@ -120,4 +115,4 @@ const styles = StyleSheet.create({
   activityPointsButton: {}
 });
 
-export default TaskCard;
+export default ActivityCard;
