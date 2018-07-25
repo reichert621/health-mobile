@@ -27,6 +27,7 @@ class AssessmentContainer extends Component {
     return fetchAssessment(assessmentId)
       .then(assessment => {
         const { id: assessmentId, questions = [] } = assessment;
+        const lastIndex = questions.length - 1;
         const current = questions.reduce((result, q, index) => {
           if (!isNumber(result) && !isNumber(q.score)) {
             return index;
@@ -35,7 +36,11 @@ class AssessmentContainer extends Component {
           return result;
         }, null);
 
-        return this.setState({ assessmentId, questions, current });
+        return this.setState({
+          assessmentId,
+          questions,
+          current: current || lastIndex
+        });
       })
       .catch(err => {
         console.log('Error fetching assessment!', err);
@@ -45,8 +50,9 @@ class AssessmentContainer extends Component {
   }
 
   handleScoreChange(question, score) {
-    const { assessmentId, questions = [] } = this.state;
+    const { current, assessmentId, questions = [] } = this.state;
     const { id: questionId } = question;
+    const isLast = current === questions.length - 1;
     const updates = questions.map(q => {
       return q.id === question.id ? { ...q, score } : q;
     });
@@ -54,6 +60,11 @@ class AssessmentContainer extends Component {
     return updateAssessmentScore(assessmentId, questionId, score)
       .then(result => {
         return this.setState({ questions: updates });
+      })
+      .then(() => {
+        setTimeout(() => {
+          this.setState({ current: isLast ? current : current + 1 });
+        }, 600);
       })
       .catch(err => {
         console.log('Error selecting score!', err);
