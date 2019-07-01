@@ -5,22 +5,26 @@ import {
   StackNavigator
 } from 'react-navigation';
 import {
-  Login,
-  Register,
-  Home,
-  Reflection,
-  Analytics
-} from './components/screens';
+  LoginScreen,
+  RegisterScreen,
+  HomeScreen,
+  ReflectionsScreen,
+  AssessmentScreen,
+  AnalyticsScreen
+} from './screens';
 
 const Tabs = TabNavigator({
-  home: Home,
-  reflect: Reflection,
-  analytics: Analytics
+  home: HomeScreen,
+  reflect: StackNavigator({
+    list: ReflectionsScreen,
+    assessment: AssessmentScreen
+  }),
+  analytics: AnalyticsScreen
 });
 
 const Intro = StackNavigator({
-  login: Login,
-  register: Register
+  login: LoginScreen,
+  register: RegisterScreen
 });
 
 const Root = SwitchNavigator({
@@ -28,4 +32,4 @@ const Root = SwitchNavigator({
   main: Tabs
 });
 
-export default Root;
+export default Root; // Router?

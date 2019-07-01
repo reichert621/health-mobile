@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Activities } from '../container';
+import { ActivitiesContainer } from '../components/activities';
 
-class Home extends Component {
+class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.today}>
         <Text style={styles.title}>Activities</Text>
-        <Activities />
+
+        <ActivitiesContainer />
       </View>
     );
   }
@@ -24,4 +25,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default HomeScreen;

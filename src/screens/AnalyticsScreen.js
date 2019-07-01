@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-class Reflection extends Component {
+class AnalyticsScreen extends Component {
   inspect() {
-    alert('Reflection!');
+    alert('TODO: Create analytics!');
   }
 
   render() {
     return (
       <TouchableOpacity style={styles.container} onPress={() => this.inspect()}>
-        <Text>Reflection!</Text>
+        <Text>Analytics!</Text>
       </TouchableOpacity>
     );
   }
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Reflection;
+export default AnalyticsScreen;

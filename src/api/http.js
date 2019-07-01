@@ -1,7 +1,7 @@
 import { assign } from 'lodash';
 
-// TODO: support non-localhost API
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://beok.herokuapp.com';
+// export const BASE_URL = 'http://localhost:3000';
 export const GET = 'GET';
 export const POST = 'POST';
 export const PUT = 'PUT';
